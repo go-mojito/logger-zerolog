@@ -51,7 +51,7 @@ func init() {
 
 ```go
 func init() {
-    zerolog.As("myRouter")
+    zerolog.As("myLogger")
 }
 ```
 <p align="center">You can use fancy logging by enabling it via:</p>
