@@ -1,6 +1,8 @@
 package zerolog
 
 import (
+	"fmt"
+
 	"github.com/go-mojito/mojito/pkg/logger"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -29,7 +31,7 @@ func NewLoggerWithFields(fields logger.Fields) Logger {
 func (l Logger) Debug(msg interface{}) {
 	log := log.Debug()
 	log = l.addFields(log)
-	log.Msg(msg.(string))
+	log.Msg(fmt.Sprintf("%s", msg))
 }
 
 // Debugf will write a debug log sprintf-style
@@ -43,7 +45,7 @@ func (l Logger) Debugf(msg string, values ...interface{}) {
 func (l Logger) Error(msg interface{}) {
 	log := log.Error()
 	log = l.addFields(log)
-	log.Msg(msg.(string))
+	log.Msg(fmt.Sprintf("%s", msg))
 }
 
 // Errorf will write a error log sprintf-style
@@ -57,7 +59,7 @@ func (l Logger) Errorf(msg string, values ...interface{}) {
 func (l Logger) Fatal(msg interface{}) {
 	log := log.Fatal()
 	log = l.addFields(log)
-	log.Msg(msg.(string))
+	log.Msg(fmt.Sprintf("%s", msg))
 }
 
 // Fatalf will write a fatal log sprintf-style
@@ -87,7 +89,7 @@ func (l Logger) Fields(fields logger.Fields) logger.Logger {
 func (l Logger) Info(msg interface{}) {
 	log := log.Info()
 	log = l.addFields(log)
-	log.Msg(msg.(string))
+	log.Msg(fmt.Sprintf("%s", msg))
 }
 
 // Infof will write a info log sprintf-style
@@ -101,7 +103,7 @@ func (l Logger) Infof(msg string, values ...interface{}) {
 func (l Logger) Trace(msg interface{}) {
 	log := log.Trace()
 	log = l.addFields(log)
-	log.Msg(msg.(string))
+	log.Msg(fmt.Sprintf("%s", msg))
 }
 
 // Tracef will write a trace log sprintf-style
@@ -115,7 +117,7 @@ func (l Logger) Tracef(msg string, values ...interface{}) {
 func (l Logger) Warn(msg interface{}) {
 	log := log.Warn()
 	log = l.addFields(log)
-	log.Msg(msg.(string))
+	log.Msg(fmt.Sprintf("%s", msg))
 }
 
 // Warnf will write a warn log sprintf-style
