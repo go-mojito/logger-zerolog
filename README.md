@@ -58,6 +58,6 @@ func init() {
 
 ```go
 func init() {
-	zerolog.Pretty()
+    zerolog.Pretty()
 }
 ```
