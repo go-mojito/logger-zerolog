@@ -73,7 +73,7 @@ func (l Logger) Fatalf(msg string, values ...interface{}) {
 func (l Logger) Field(name string, val interface{}) logger.Logger {
 	f := l.fields.Clone()
 	f[name] = val
-	return l
+	return NewLoggerWithFields(f)
 }
 
 // Fields will add multiple fields to a new logger and return it
@@ -82,7 +82,7 @@ func (l Logger) Fields(fields logger.Fields) logger.Logger {
 	for name, val := range fields {
 		f[name] = val
 	}
-	return NewLoggerWithFields(fields)
+	return NewLoggerWithFields(f)
 }
 
 // Info will write a info log
