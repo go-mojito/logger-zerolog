@@ -1,3 +1,8 @@
+<p align="center">
+    <img src="/.github/assets/gopher.png"
+        height="300">
+</p>
+
 <h1 align="center"><strong>zerolog for Mojito</strong></h1>
 <p align="center">
     <a href="https://goreportcard.com/report/github.com/go-mojito/logger-zerolog" alt="Go Report Card">
@@ -39,25 +44,36 @@ zerolog for Mojito provides a zerolog Logger implementation that was designed sp
         <img src="https://sonarcloud.io/api/project_badges/measure?project=go-mojito_logger-zerolog&metric=bugs" /></a>
 </p>
 
-<p align="center"><strong>How to register</strong></p>
-<p align="center">To register the zerolog as the default logger, do the following in your main file</p>
+<p align="center"><strong>Quickstart</strong></p>
+<p align="center">To start using zerolog as the default logger, simply set it as default like this:</p>
 
 ```go
 func init() {
     zerolog.AsDefault()
 }
 ```
-<p align="center">To register zerolog as a named logger, do the following in your main file</p>
+
+<p align="center">Or if you want it as a secondary logger you can register it as a named logger like this:</p>
 
 ```go
 func init() {
     zerolog.As("myLogger")
 }
 ```
-<p align="center">You can use fancy logging by enabling it via:</p>
+
+<p align="center">If you want a more readable, fancy looking log you can enable it by simply adding one line during init:</p>
 
 ```go
 func init() {
     zerolog.Pretty()
 }
 ```
+
+<p align="center"><strong>Documentation</strong></p>
+<p align="center">
+	Read our
+	<a href="https://go-mojito.infinytum.co/docs">Documentation</a>, check out the 
+	<a href="https://go-mojito.infinytum.co/">Project Website</a>.
+</p>
+
+<p align="center"><sub>Icon made with <a href="https://gopherize.me">Gopherize</a> and <a href="https://www.flaticon.com/free-icon/mojito_920710">flaticon</a>.</sub></p>
