@@ -53,7 +53,7 @@ func init() {
 }
 ```
 
-<p align="center">Or if you want it as a secondary logger you can register it as a named router like this:</p>
+<p align="center">Or if you want it as a secondary logger you can register it as a named logger like this:</p>
 
 ```go
 func init() {
