@@ -1,6 +1,6 @@
 github.com/coreos/go-systemd/v22 v22.3.3-0.20220203105225-a9a7ef127534/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
-github.com/go-mojito/mojito v0.0.11 h1:/VltAwUeWXcW0FO12mwDoROg+G5H6a4WQw7nC/n5Y3k=
-github.com/go-mojito/mojito v0.0.11/go.mod h1:aaHXh7HkyHGTi6fFRu+ZjuAu9WhWqs9I62Er/bQaOXA=
+github.com/go-mojito/mojito v0.0.12 h1:UwEvVxJFakoRtLI4gEUZvAp1wuBArcuf7Uilkw05u54=
+github.com/go-mojito/mojito v0.0.12/go.mod h1:aaHXh7HkyHGTi6fFRu+ZjuAu9WhWqs9I62Er/bQaOXA=
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
 github.com/infinytum/injector v0.0.2 h1:isJZ27MvijpoQzzJaOWLqfyczp1EP9CM786Ef1KelFI=
 github.com/infinytum/injector v0.0.2/go.mod h1:/8absiTs7Afl21cGagOLkXPrypVGZrOSkH4qu/IsP28=
