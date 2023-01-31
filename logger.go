@@ -3,6 +3,7 @@ package zerolog
 import (
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/go-mojito/mojito/pkg/logger"
 	"github.com/rs/zerolog"
@@ -140,7 +141,9 @@ func (l *Logger) Fatalf(msg string, values ...interface{}) {
 
 func (l Logger) addFields(log *zerolog.Event) *zerolog.Event {
 	for field := range l.fields {
-		log = log.Interface(field, l.fields[field])
+		sanitizedVal := strings.ReplaceAll(fmt.Sprint(l.fields[field]), "\n", "")
+		sanitizedVal = strings.ReplaceAll(sanitizedVal, "\r", "")
+		log = log.Str(field, fmt.Sprint(sanitizedVal))
 	}
 	return log
 }
