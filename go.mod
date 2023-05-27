@@ -1,6 +1,6 @@
 module github.com/go-mojito/logger-zerolog
 
-go 1.19
+go 1.20
 
 require (
 	github.com/go-mojito/mojito v0.0.17
