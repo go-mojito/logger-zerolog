@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/go-mojito/mojito v0.0.17
-	github.com/rs/zerolog v1.29.1
+	github.com/rs/zerolog v1.30.0
 )
 
 require (
