@@ -37,8 +37,7 @@ jobs:
             ${{ runner.os }}-go-${{ matrix.go-version }}-test-
       - name: Run Tests
         run: |
-          go mod tidy -go=${{ matrix.go-version }}
-          go mod download
+          go get .
           go test ./... -v -race
   gosec-test:
     name: GoSec Test
