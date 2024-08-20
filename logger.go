@@ -1,9 +1,7 @@
 package zerolog
 
 import (
-	"fmt"
 	"io"
-	"strings"
 
 	"github.com/go-mojito/mojito/pkg/logger"
 	"github.com/rs/zerolog"
@@ -12,138 +10,112 @@ import (
 
 // Logger is a wrapper around zerolog.Logger
 type Logger struct {
-	logger zerolog.Logger
-	fields logger.Fields
+	Logger zerolog.Logger
+	level  zerolog.Level
 }
 
 // NewLogger returns a new Logger
 func NewLogger() *Logger {
 	return &Logger{
-		logger: log.Logger,
-		fields: make(logger.Fields),
+		Logger: log.Logger,
+		level:  zerolog.NoLevel,
 	}
 }
 
-// NewLogger returns a new Logger
-func NewLoggerWithFields(logger zerolog.Logger, fields logger.Fields) *Logger {
-	return &Logger{
-		logger: logger,
-		fields: fields,
-	}
-}
-
-// SetOutput sets the output destination for the default logger.
+// SetOutput sets the output destination for the default Logger.
 func (l *Logger) SetOutput(w io.Writer) error {
-	logger := l.logger.Output(w)
-	l.logger = logger
+	Logger := l.Logger.Output(w)
+	l.Logger = Logger
 	return nil
 }
 
-// Field will add a field to a new logger and return it
+// Field will add a field to a new Logger and return it
 func (l *Logger) Field(name string, val interface{}) logger.Logger {
-	f := l.fields.Clone()
-	f[name] = val
-	return NewLoggerWithFields(l.logger, f)
+	return &Logger{
+		Logger: l.Logger.With().Interface(name, val).Logger(),
+		level:  l.level,
+	}
 }
 
-// Fields will add multiple fields to a new logger and return it
+// Fields will add multiple fields to a new Logger and return it
 func (l *Logger) Fields(fields logger.Fields) logger.Logger {
-	f := l.fields.Clone()
-	for name, val := range fields {
-		f[name] = val
+	return &Logger{
+		Logger: l.Logger.With().Fields(fields).Logger(),
+		level:  l.level,
 	}
-	return NewLoggerWithFields(l.logger, f)
 }
 
 // Trace will write a trace log
-func (l *Logger) Trace(msg interface{}) {
-	log := l.logger.Trace()
-	log = l.addFields(log)
-	log.Msg(fmt.Sprintf("%s", msg))
-}
-
-// Tracef will write a trace log sprintf-style
-func (l *Logger) Tracef(msg string, values ...interface{}) {
-	log := l.logger.Trace()
-	log = l.addFields(log)
-	log.Msgf(msg, values...)
+func (l *Logger) Trace() logger.Logger {
+	return &Logger{
+		Logger: l.Logger,
+		level:  zerolog.TraceLevel,
+	}
 }
 
 // Debug will write a debug log
-func (l *Logger) Debug(msg interface{}) {
-	log := l.logger.Debug()
-	log = l.addFields(log)
-	log.Msg(fmt.Sprintf("%s", msg))
-}
-
-// Debugf will write a debug log sprintf-style
-func (l *Logger) Debugf(msg string, values ...interface{}) {
-	log := l.logger.Debug()
-	log = l.addFields(log)
-	log.Msgf(msg, values...)
+func (l *Logger) Debug() logger.Logger {
+	return &Logger{
+		Logger: l.Logger,
+		level:  zerolog.DebugLevel,
+	}
 }
 
 // Info will write a info log
-func (l *Logger) Info(msg interface{}) {
-	log := l.logger.Info()
-	log = l.addFields(log)
-	log.Msg(fmt.Sprintf("%s", msg))
-}
-
-// Infof will write a info log sprintf-style
-func (l *Logger) Infof(msg string, values ...interface{}) {
-	log := l.logger.Info()
-	log = l.addFields(log)
-	log.Msgf(msg, values...)
+func (l *Logger) Info() logger.Logger {
+	return &Logger{
+		Logger: l.Logger,
+		level:  zerolog.InfoLevel,
+	}
 }
 
 // Warn will write a warn log
-func (l *Logger) Warn(msg interface{}) {
-	log := l.logger.Warn()
-	log = l.addFields(log)
-	log.Msg(fmt.Sprintf("%s", msg))
-}
-
-// Warnf will write a warn log sprintf-style
-func (l *Logger) Warnf(msg string, values ...interface{}) {
-	log := l.logger.Warn()
-	log = l.addFields(log)
-	log.Msgf(msg, values...)
+func (l *Logger) Warn() logger.Logger {
+	return &Logger{
+		Logger: l.Logger,
+		level:  zerolog.WarnLevel,
+	}
 }
 
 // Error will write a error log
-func (l *Logger) Error(msg interface{}) {
-	log := l.logger.Error()
-	log = l.addFields(log)
-	log.Msg(fmt.Sprintf("%s", msg))
-}
-
-// Errorf will write a error log sprintf-style
-func (l *Logger) Errorf(msg string, values ...interface{}) {
-	log := l.logger.Error()
-	log = l.addFields(log)
-	log.Msgf(msg, values...)
+func (l *Logger) Error() logger.Logger {
+	return &Logger{
+		Logger: l.Logger,
+		level:  zerolog.ErrorLevel,
+	}
 }
 
 // Fatal will write a fatal log
-func (l *Logger) Fatal(msg interface{}) {
-	log := l.logger.Fatal()
-	log = l.addFields(log)
-	log.Msg(fmt.Sprintf("%s", msg))
-}
-
-// Fatalf will write a fatal log sprintf-style
-func (l *Logger) Fatalf(msg string, values ...interface{}) {
-	log := l.logger.Fatal()
-	log = l.addFields(log)
-	log.Msgf(msg, values...)
-}
-
-func (l Logger) addFields(log *zerolog.Event) *zerolog.Event {
-	for field := range l.fields {
-		sanitizedVal := strings.ReplaceAll(fmt.Sprint(l.fields[field]), "\n", "")
-		sanitizedVal = strings.ReplaceAll(sanitizedVal, "\r", "")
-		log = log.Str(field, fmt.Sprint(sanitizedVal))
+func (l *Logger) Fatal() logger.Logger {
+	return &Logger{
+		Logger: l.Logger,
+		level:  zerolog.FatalLevel,
 	}
-	return log
+}
+
+// Msg implements logger.Logger.
+func (l *Logger) Msg(msg interface{}) {
+	l.Msgf("%v", msg)
+}
+
+// Msgf implements logger.Logger.
+func (l *Logger) Msgf(msg string, values ...interface{}) {
+	switch l.level {
+	case zerolog.TraceLevel:
+		l.Logger.Trace().Msgf(msg, values...)
+	case zerolog.DebugLevel:
+		l.Logger.Debug().Msgf(msg, values...)
+	case zerolog.InfoLevel:
+		l.Logger.Info().Msgf(msg, values...)
+	case zerolog.WarnLevel:
+		l.Logger.Warn().Msgf(msg, values...)
+	case zerolog.ErrorLevel:
+		l.Logger.Error().Msgf(msg, values...)
+	case zerolog.FatalLevel:
+		l.Logger.Fatal().Msgf(msg, values...)
+	case zerolog.PanicLevel:
+		l.Logger.Panic().Msgf(msg, values...)
+	case zerolog.NoLevel:
+		l.Logger.Log().Msgf(msg, values...)
+	}
 }

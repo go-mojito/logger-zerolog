@@ -3,7 +3,7 @@ module github.com/go-mojito/logger-zerolog
 go 1.23
 
 require (
-	github.com/go-mojito/mojito v0.0.18
+	github.com/go-mojito/mojito v0.0.19-0.20240820120524-7da39555fc7f
 	github.com/rs/zerolog v1.33.0
 )
 
