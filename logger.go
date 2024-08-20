@@ -38,7 +38,7 @@ func (l *Logger) Field(name string, val interface{}) logger.Logger {
 // Fields will add multiple fields to a new logger and return it
 func (l *Logger) Fields(fields logger.Fields) logger.Logger {
 	return &Logger{
-		logger: l.logger.With().Fields(fields).Logger(),
+		logger: l.logger.With().Fields(map[string]interface{}(fields)).Logger(),
 	}
 }
 
